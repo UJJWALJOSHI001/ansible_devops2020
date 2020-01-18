@@ -1,0 +1,23 @@
+---
+ - hosts: all
+   become: true
+   tasks:
+    - name: adding user
+      user: 
+       name: "{{ item.user }}"
+       state: present
+       group: "{{ item.group }}"
+       append:  yes
+      loop:
+        - user: adhoc
+          group: test1
+        - user: adhoc1
+          group: test2
+        - user: adhoc2
+          group: test3
+      when: ansible_facts.distribution == "centos"
+      register: out
+     
+    - name: print 
+      debug: 
+       var: out

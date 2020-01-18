@@ -1,0 +1,9 @@
+---
+ - hosts: all
+   tasks:
+    - name: copy file from ansible system 
+      copy: 
+       src: /home/uv/a.html 
+       dest: /home/uv
+    - name : command module
+      command: ls /home/uv

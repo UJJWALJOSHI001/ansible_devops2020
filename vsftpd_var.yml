@@ -1,0 +1,17 @@
+---
+ - hosts: all
+   become: true
+   vars: 
+    - web_server: httpd
+    - web_fire: http
+    - ser: service
+   tasks: 
+    - name:  install  {{ web_server }} 
+      yum: 
+       name: "{{ web_server }}"
+       state: present
+
+    - name: service restart
+      service: 
+       name: "{{ web_server }}"
+       state: restarted 

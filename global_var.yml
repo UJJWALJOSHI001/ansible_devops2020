@@ -1,0 +1,61 @@
+---
+ - hosts: a
+   become: true
+   tasks:       
+    - name: repo
+      yum_repository:
+       name: redhat
+       description: rhel YUM repo
+       file: red
+       baseurl: ftp://192.168.10.254/pub/rhel75
+       gpgcheck: no
+   
+    - name: installing {{ x }}
+      yum:
+       name: "{{ x }}"
+       state: latest
+       
+    - name: installing firewall
+      yum:
+       name: firewalld
+       state: latest
+
+    - name: start service of {{ x }}  
+      service: 
+       name: "{{ x }}"
+       state: started
+       enabled: yes
+  
+    
+    - name: reloadservie
+      service: 
+       name: firewalld
+       state: started
+       enabled: yes
+
+    - name: manage firewall for httpd
+      firewalld: 
+       service: http
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+    - name: copy content
+      copy: 
+       content: hello world
+       dest: /var/www/html/index.html
+  
+    - name: start service of firewall
+      service: 
+       name: httpd
+       state: reloaded
+       enabled: yes
+
+
+ - hosts: b
+   become: true
+   tasks:
+    - name: installing vsftpd
+      yum:
+       name: vsftpd
+       state: latest

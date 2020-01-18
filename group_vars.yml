@@ -1,0 +1,13 @@
+---
+ - hosts: all
+   become: true
+   tasks: 
+    - name:  install  {{ web_group }} 
+      yum: 
+       name: "{{ web_group }}"
+       state: present
+
+    - name: service restart
+      service: 
+       name: "{{ web_group  }}"
+       state: restarted 

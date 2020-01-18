@@ -1,0 +1,45 @@
+---
+ - hosts: b
+   become: true
+   tasks:
+    - name: installing vsftpd
+      yum:
+       name: vsftpd
+       state: latest
+
+    - name: service vsftpd
+      service:
+       name: vsftpd
+       state: started
+       enabled: yes 
+
+    - name: manage firewall
+      firewalld:
+       service: ftp
+       permanent: yes
+       immediate: yes
+       state: enabled
+    
+    - name: directory
+      file:
+       path: /var/ftp/pub/ujjwal
+       state: directory
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

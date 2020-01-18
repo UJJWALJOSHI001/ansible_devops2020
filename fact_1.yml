@@ -1,0 +1,19 @@
+---
+ - hosts: all
+   tasks:
+    - name: copy file from ansible system 
+      copy: 
+       content: this is over ip {{ ansible_facts.default_ipv4.address }}
+       dest: /home/uv/a.html
+      register: out1
+
+    - name : command module
+      command: cat /home/uv/a.html
+      register: out
+
+    - name: print out var 
+      debug: 
+       var: out1
+    - name: print out var 
+      debug: 
+       var: out.stdout

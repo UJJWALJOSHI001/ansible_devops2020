@@ -1,0 +1,19 @@
+---
+ - name: fact gather  
+   become: true
+   hosts: all
+   tasks: 
+    - name: fact 
+      debug:
+       msg: this is adhoc networks
+    - name: copy custom fact 
+      copy:
+       src: /etc/ansible/facts.d/my.fact
+       dest: /etc/ansible/facts.d/my.fact
+    - debug:
+       msg:
+        -  this is over ip {{ ansible_facts.default_ipv4.address  }}
+        -  how are you
+
+    - debug:
+       msg: custom fact {{ ansible_facts['ansible_local']['my']['packages']['web_package'] }}

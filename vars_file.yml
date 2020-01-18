@@ -1,0 +1,15 @@
+---
+ - hosts: all
+   become: true
+   vars_files:
+    - var/var.yml
+   tasks: 
+    - name:  install  {{ web_server }} 
+      yum: 
+       name: "{{ web_server }}"
+       state: present
+
+    - name: service restart
+      service: 
+       name: "{{ web_server }}"
+       state: restarted 
